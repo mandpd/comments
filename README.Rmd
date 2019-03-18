@@ -1,0 +1,109 @@
+---
+output: github_document
+---
+
+[![Travis build status](https://travis-ci.com/mandpd/comments.svg?branch=master)](https://travis-ci.org/mandpd/comments)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/mandpd/comments?branch=master&svg=true)](https://ci.appveyor.com/project/mandpd/comments)
+[![Coverage status](https://codecov.io/gh/mandpd/comments/branch/master/graph/badge.svg)](https://codecov.io/github/mandpd/comments?branch=master)
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# comments
+
+This package allows you to add an attribute to your R objects that can be used to store comments. 
+It provides a set of functions to list, add, and delete comments.
+
+## Installation
+
+You can install the released version of comments from [github](https://github.com/mandpd/comments) with:
+
+``` r
+library(devtools)
+install_github("mandpd/comments")
+```
+
+## Example
+
+The comments package allows you to add comments to your data sets as you manipulate them, e.g. during your exploratory data analysis phase.
+To enable a data set to contain comments, first apply the notes() function to it.
+
+### notes()
+
+```{r}
+library(comments)
+df <- notes(cars)
+```
+
+This enables the use of addNote(), deleteNote(), and getNotes() with the cars data.frame
+
+### getNotes()
+
+```{r}
+getNotes(df)
+```
+
+### addNote()
+
+Let's rescale the values in the speed and distance columns to be between 0 and 1, add notes explaining this, and then print out the notes.
+
+```{r}
+rescale_param <- function(x) { (x-min(x)) / (max(x)- min(x))}
+df[] <- lapply(df, rescale_param)
+df <- addNote(df, 'rescale speed to between 0 and 1')
+df <- addNote(df, 'rescale distance to between 0 and 1')
+getNotes(df)
+```
+
+### Use with dplyr package
+
+These comments will follow any operations performed on the object, and can be used in conjunction with dplyr pipes (%>%) which provides a fast
+way to add notes as you proceed
+
+```{r message=F }
+library(dplyr)
+df2 <- notes(cars)
+df3 <- df2 %>% 
+  addNote('add a time variable based on dist / speed') %>%
+  mutate(time = dist / speed) %>%
+  addNote('filter out dist variable') %>%
+  select(-dist)
+getNotes(df3)
+```
+
+```{r}
+glimpse(df3)
+```
+
+### deleteNote()
+
+You can selectively remove comments using the comment id
+
+```{r}
+df3 <- deleteNote(df3,1,confirm = FALSE)
+getNotes(df3)
+```
+
+### summary function
+
+Data frames with the commented class will include any comments when summary is run
+
+```{r}
+summary(df3)
+```
+
+
+### timestamps
+
+All notes are entered with a timestamp. You can use the 'show_timestamps' parameter to see these
+
+```{r}
+getNotes(df3, show_timestamps = T)
+```

@@ -1,0 +1,19 @@
+Package: comments
+Title: Add comments to your R data frames as you modify them to document the reasons for your changes
+Version: 0.0.3
+Authors@R: person("Mark", "Smith", email = "msmith77@nd.edu", role = c("aut", "cre"))
+Description: This package allows you to add an attribute to your R objects that can be used to store comments.
+    It provides a set of functions to list, add, and delete comments. It can also be used with the dplyr package.
+Depends: R (>= 3.4.0)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1.9000
+Suggests:
+    knitr,
+    rmarkdown,
+    dplyr,
+    covr,
+    testthat
+URL: https://github.com/mandpd/comments
+BugReports: https://github.com/mandpd/comments/issues
