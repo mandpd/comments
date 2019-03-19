@@ -19,10 +19,9 @@ and delete comments.
 You can install the released version of comments from
 [github](https://github.com/mandpd/comments) with:
 
-``` r
 library(devtools)
-install_github("mandpd/comments")
-```
+
+install\_github(“mandpd/comments”)
 
 ## Example
 
@@ -127,8 +126,8 @@ summary is run
 summary(df3)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    Tue Mar 19 10:59:56 2019 
-#> 3 :  filtered out dist variable                                     Tue Mar 19 10:59:56 2019
+#> 2 :  added a time variable based on dist / speed                    Tue Mar 19 12:30:46 2019 
+#> 3 :  filtered out dist variable                                     Tue Mar 19 12:30:46 2019
 #>      speed           time      
 #>  Min.   : 4.0   Min.   :0.500  
 #>  1st Qu.:12.0   1st Qu.:1.921  
@@ -147,8 +146,8 @@ is run with the ‘shownotes’ parameter set to TRUE
 print(df3[1:5,], shownotes = T)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    Tue Mar 19 10:59:56 2019 
-#> 3 :  filtered out dist variable                                     Tue Mar 19 10:59:56 2019 
+#> 2 :  added a time variable based on dist / speed                    Tue Mar 19 12:30:46 2019 
+#> 3 :  filtered out dist variable                                     Tue Mar 19 12:30:46 2019 
 #> 
 #>   speed      time
 #> 1     4 0.5000000
@@ -167,6 +166,6 @@ parameter to see these
 getNotes(df3, showtimestamps = T)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    Tue Mar 19 10:59:56 2019 
-#> 3 :  filtered out dist variable                                     Tue Mar 19 10:59:56 2019
+#> 2 :  added a time variable based on dist / speed                    Tue Mar 19 12:30:46 2019 
+#> 3 :  filtered out dist variable                                     Tue Mar 19 12:30:46 2019
 ```
