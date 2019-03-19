@@ -13,21 +13,19 @@
 #' }
 notes <- function(x, comment = '') {
   if (missing(x)) {
-    cat('See ?notes for correct usage\n')
-    return()
+    stop('See ?notes for correct usage\n')
   }
   if(!is.character(comment)) {
     cat('Comment should be a string or character vector. See ?notes for for correct usage\n')
-    return()
+    invisible(x)
   }
   if(length(comment) > 66) {
     cat('Your comment should be less than 66 characters.')
-    return()
+    invisible(x)
   }
   if (inherits(x, 'commented')) {
     cat('This object is already enabled for comments\n')
     invisible(x)
-    return()
   }
   # check it hasn't already been applied
 
@@ -91,8 +89,7 @@ deleteNote <- function(x, index, confirm) UseMethod("deleteNote",x)
 #' @export
 getNotes.commented <- function(x, showtimestamps = FALSE) {
   if (missing(x)) {
-    cat('See ?getNotes for correct usage\n')
-    return
+    stop('See ?getNotes for correct usage\n')
   }
   cmtMatrix <- attr(x,'comments')
   cat(format('#    Comments', width = 66), ifelse(showtimestamps, ' Time Stamp\n', '\n'))
@@ -113,8 +110,7 @@ getNotes.commented <- function(x, showtimestamps = FALSE) {
 #' @export
 addNote.commented <- function(x,comment) {
   if (missing(x) || missing(comment)) {
-    cat('See ?addNote for correct usage\n')
-    return
+    stop('See ?addNote for correct usage\n')
   }
   cmtMatrix <- attr(x, 'comments')
   idx <- as.numeric(cmtMatrix[nrow(cmtMatrix),'comment_id'])
@@ -134,8 +130,7 @@ addNote.commented <- function(x,comment) {
 #' @export
 deleteNote.commented <- function(x,index, confirm) {
   if (missing(x)) {
-    cat('See ?deleteNote for correct usage\n')
-    return
+    stop('See ?deleteNote for correct usage\n')
   }
   if(missing(confirm)) {
     confirm <- TRUE
