@@ -4,10 +4,12 @@
 \alias{notes}
 \title{Notes Function}
 \usage{
-notes(x)
+notes(x, comment = "")
 }
 \arguments{
 \item{x}{R object to which comments should be added}
+
+\item{comment}{optional comment to be added to R object}
 }
 \value{
 Original R object wrapped for use with comment functions
@@ -17,7 +19,8 @@ This function enables comments to be added to the supplied R object.
 }
 \examples{
 \dontrun{
-df2 <- notes(df2)
+df <- notes(cars)
+df <- notes(cars, 'based on cars dataset from http://mysite.com')
 }
 }
 \keyword{comments}

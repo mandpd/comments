@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{R object to print the comments from}
 
-\item{show_timestamps}{boolean to indicate if timestamps for each comment should be shown or hidden}
+\item{showtimestamps}{boolean to indicate if timestamps for each comment should be shown or hidden}
 }
 \value{
 message on correct use of function

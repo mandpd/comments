@@ -4,12 +4,12 @@
 \alias{addNote}
 \title{addNote Function}
 \usage{
-addNote(x, y)
+addNote(x, comment)
 }
 \arguments{
 \item{x}{R object to add a comment to}
 
-\item{y}{the text of the comment to add}
+\item{comment}{the text of the comment to add}
 }
 \value{
 Original R object with added comment

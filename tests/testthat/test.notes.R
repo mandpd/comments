@@ -7,4 +7,19 @@ test_that('object with existing commented class is trapped', {
   expect_false(isTRUE(all.equal(class(df)[2], 'commented')))
 })
 
+test_that('object is enabled for comments', {
+  # data.frame
+  df <- notes(cars)
+  expect_equal(capture_output(getNotes(df)), '#    Comments                                                      \n--------------------------------------------------------------\n1 :  Comments enabled                                                 \n')
+  # vector
+  df <- notes(c(1,2,3,4,5,6))
+  expect_equal(capture_output(getNotes(df)), '#    Comments                                                      \n--------------------------------------------------------------\n1 :  Comments enabled                                                 \n')
+  # list
+  df <- notes(list(1,2,3,4,'a','b'))
+  expect_equal(capture_output(getNotes(df)), '#    Comments                                                      \n--------------------------------------------------------------\n1 :  Comments enabled                                                 \n')
+  })
 
+test_that('comments parameter works correctly', {
+  df <- notes(cars, comment = 'first comment')
+  expect_equal(capture_output(getNotes(df)), '#    Comments                                                      \n--------------------------------------------------------------\n1 :  first comment                                                    \n')
+})

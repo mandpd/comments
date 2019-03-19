@@ -4,12 +4,12 @@
 \alias{addNote.default}
 \title{addNote Default Function}
 \usage{
-\method{addNote}{default}(x, y)
+\method{addNote}{default}(x, comment)
 }
 \arguments{
 \item{x}{R object to add a comment to}
 
-\item{y}{the text of the comment to add}
+\item{comment}{the text of the comment to add}
 }
 \value{
 message on correct use of function

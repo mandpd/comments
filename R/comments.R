@@ -2,14 +2,16 @@
 #'
 #' This function enables comments to be added to the supplied R object.
 #' @param x R object to which comments should be added
+#' @param comment optional comment to be added to R object
 #' @return Original R object wrapped for use with comment functions
 #' @keywords comments
 #' @export
 #' @examples
 #' \dontrun{
-#' df2 <- notes(df2)
+#' df <- notes(cars)
+#' df <- notes(cars, 'based on cars dataset from http://mysite.com')
 #' }
-notes <- function(x) {
+notes <- function(x, comment = '') {
   if (missing(x)) {
     cat('See ?notes for correct usage\n')
     return()
@@ -22,7 +24,7 @@ notes <- function(x) {
   # check it hasn't already been applied
 
   class(x) <- c('commented', class(x))
-  cmtMatrix <- matrix(list(1 ,paste('Comments enabled'), Sys.time()), nrow = 1)
+  cmtMatrix <- matrix(list(1 ,paste(ifelse(comment == '', 'Comments enabled' ,comment)), Sys.time()), nrow = 1)
   colnames(cmtMatrix) <- c('comment_id','comment_text','comment_timestamp')
   attr(x,'comments') <- cmtMatrix
   invisible(x)
@@ -46,7 +48,7 @@ getNotes <- function(x, showtimestamps = FALSE) UseMethod("getNotes", x)
 #'
 #' This function allows a comment to be added to the supplied R object.
 #' @param x R object to add a comment to
-#' @param y the text of the comment to add
+#' @param comment the text of the comment to add
 #' @return Original R object with added comment
 #' @keywords add comment
 #' @export
@@ -54,7 +56,7 @@ getNotes <- function(x, showtimestamps = FALSE) UseMethod("getNotes", x)
 #'  \dontrun{
 #' df2 <- addNotes(df2, 'My new note')
 #' }
-addNote <- function(x,y) UseMethod("addNote", x)
+addNote <- function(x, comment) UseMethod("addNote", x)
 
 #' deleteNote Function
 #'
@@ -75,7 +77,7 @@ deleteNote <- function(x, index, confirm) UseMethod("deleteNote",x)
 #'
 #' This function prints the comments associated with the supplied R object.
 #' @param x R object to print the comments from
-#' @param show_timestamps boolean to indicate if timestamps for each comment should be shown or hidden
+#' @param showtimestamps boolean to indicate if timestamps for each comment should be shown or hidden
 #' @return print out of comments in tabular form
 #' @keywords get comments
 #' @export
@@ -97,19 +99,19 @@ getNotes.commented <- function(x, showtimestamps = FALSE) {
 #'
 #' This function allows a comment to be added to the supplied R object.
 #' @param x R object to add a comment to
-#' @param y the text of the comment to add
+#' @param comment the text of the comment to add
 #' @return Original R object with added comment
 #' @keywords add comment
 #' @export
 #' @importFrom utils tail
-addNote.commented <- function(x,y) {
-  if (missing(x) || missing(y)) {
+addNote.commented <- function(x,comment) {
+  if (missing(x) || missing(comment)) {
     cat('See ?addNote for correct usage\n')
     return
   }
   cmtMatrix <- attr(x, 'comments')
   idx <- as.numeric(cmtMatrix[nrow(cmtMatrix),'comment_id'])
-  attr(x, 'comments') <- rbind(cmtMatrix, list(idx+1, y, Sys.time()))
+  attr(x, 'comments') <- rbind(cmtMatrix, list(idx+1, comment, Sys.time()))
   NextMethod()
   invisible(x)
 }
@@ -156,7 +158,7 @@ deleteNote.commented <- function(x,index, confirm) {
 #'
 #' This function provides a help message when applied to an R object that has not been enabled for comments.
 #' @param x R object to print the comments from
-#' @param show_timestamps boolean to indicate if timestamps for each comment should be shown or hidden
+#' @param showtimestamps boolean to indicate if timestamps for each comment should be shown or hidden
 #' @return message on correct use of function
 #' @keywords get comments
 #' @export
@@ -168,11 +170,11 @@ getNotes.default <- function(x, showtimestamps) {
 #'
 #' This function provides a help message when applied to an R object that has not been enabled for comments.
 #' @param x R object to add a comment to
-#' @param y the text of the comment to add
+#' @param comment the text of the comment to add
 #' @return message on correct use of function
 #' @keywords add comment
 #' @export
-addNote.default <- function(x,y) {
+addNote.default <- function(x,comment) {
   ('See ?addNote for correct usage\n')
 }
 
