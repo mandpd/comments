@@ -26,20 +26,21 @@ It provides a set of functions to list, add, and delete comments.
 You can install the released version of comments from [github](https://github.com/mandpd/comments) with:
 
 ``` r
-library(githubinstall)
-gh_install_packages("comments")
+library(devtools)
+install_github("mandpd/comments")
 ```
 
 ## Example
 
 The comments package allows you to add comments to your data sets as you manipulate them, e.g. during your exploratory data analysis phase.
-To enable a data set to contain comments, first apply the notes() function to it.
+To enable a data set to contain comments, first apply the notes() function to it. You can optionally add an intial comment, e.g. a summary of the contents of the dataset, or the source of the dataset. Additional notes can be added using addNote()
 
 ### notes()
 
 ```{r}
 library(comments)
-df <- notes(cars)
+df <- notes(cars, 'dataset of speed and stopping distances of cars')
+df <- addNote(df, 'from base package') 
 ```
 
 This enables the use of addNote(), deleteNote(), and getNotes() with the cars data.frame
@@ -52,13 +53,13 @@ getNotes(df)
 
 ### addNote()
 
-Let's rescale the values in the speed and distance columns to be between 0 and 1, add notes explaining this, and then print out the notes.
+Let's rescale the values in the speed and distance columns to be between 0 and 1, add notes explaining this, and then print out the notes. An individual comment can contain a maximum of 66 characters. If your comment needs to be longer, use the addNote function multiple times.
 
 ```{r}
 rescale_param <- function(x) { (x-min(x)) / (max(x)- min(x))}
 df[] <- lapply(df, rescale_param)
-df <- addNote(df, 'rescale speed to between 0 and 1')
-df <- addNote(df, 'rescale distance to between 0 and 1')
+df <- addNote(df, 'rescaled speed to between 0 and 1')
+df <- addNote(df, 'rescaled distance to between 0 and 1')
 getNotes(df)
 ```
 
@@ -69,11 +70,11 @@ way to add notes as you proceed
 
 ```{r message=F }
 library(dplyr)
-df2 <- notes(cars)
+df2 <- notes(cars, 'dataset of speed and stopping distances of cars')
 df3 <- df2 %>% 
-  addNote('add a time variable based on dist / speed') %>%
+  addNote('added a time variable based on dist / speed') %>%
   mutate(time = dist / speed) %>%
-  addNote('filter out dist variable') %>%
+  addNote('filtered out dist variable') %>%
   select(-dist)
 getNotes(df3)
 ```
@@ -99,6 +100,13 @@ Data frames with the commented class will include any comments when summary is r
 summary(df3)
 ```
 
+### print function
+
+R objects with the commented class will include any comments when print is run with the 'shownotes' parameter set to TRUE
+
+```{r}
+print(df3[1:5,], shownotes = T)
+```
 
 ### timestamps
 

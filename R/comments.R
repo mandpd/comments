@@ -16,6 +16,14 @@ notes <- function(x, comment = '') {
     cat('See ?notes for correct usage\n')
     return()
   }
+  if(!is.character(comment)) {
+    cat('Comment should be a string or character vector. See ?notes for for correct usage\n')
+    return()
+  }
+  if(length(comment) > 66) {
+    cat('Your comment should be less than 66 characters.')
+    return()
+  }
   if (inherits(x, 'commented')) {
     cat('This object is already enabled for comments\n')
     invisible(x)
@@ -103,7 +111,6 @@ getNotes.commented <- function(x, showtimestamps = FALSE) {
 #' @return Original R object with added comment
 #' @keywords add comment
 #' @export
-#' @importFrom utils tail
 addNote.commented <- function(x,comment) {
   if (missing(x) || missing(comment)) {
     cat('See ?addNote for correct usage\n')

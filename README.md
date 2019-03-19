@@ -20,8 +20,8 @@ You can install the released version of comments from
 [github](https://github.com/mandpd/comments) with:
 
 ``` r
-library(githubinstall)
-gh_install_packages("comments")
+library(devtools)
+install_github("mandpd/comments")
 ```
 
 ## Example
@@ -29,13 +29,16 @@ gh_install_packages("comments")
 The comments package allows you to add comments to your data sets as you
 manipulate them, e.g. during your exploratory data analysis phase. To
 enable a data set to contain comments, first apply the notes() function
-to it.
+to it. You can optionally add an intial comment, e.g. a summary of the
+contents of the dataset, or the source of the dataset. Additional notes
+can be added using addNote()
 
 ### notes()
 
 ``` r
 library(comments)
-df <- notes(cars)
+df <- notes(cars, 'dataset of speed and stopping distances of cars')
+df <- addNote(df, 'from base package') 
 ```
 
 This enables the use of addNote(), deleteNote(), and getNotes() with the
@@ -47,25 +50,29 @@ cars data.frame
 getNotes(df)
 #> #    Comments                                                      
 #> --------------------------------------------------------------
-#> 1 :  Comments enabled
+#> 1 :  dataset of speed and stopping distances of cars                  
+#> 2 :  from base package
 ```
 
 ### addNote()
 
 Let’s rescale the values in the speed and distance columns to be between
-0 and 1, add notes explaining this, and then print out the notes.
+0 and 1, add notes explaining this, and then print out the notes. An
+individual comment can contain a maximum of 66 characters. If your
+comment needs to be longer, use the addNote function multiple times.
 
 ``` r
 rescale_param <- function(x) { (x-min(x)) / (max(x)- min(x))}
 df[] <- lapply(df, rescale_param)
-df <- addNote(df, 'rescale speed to between 0 and 1')
-df <- addNote(df, 'rescale distance to between 0 and 1')
+df <- addNote(df, 'rescaled speed to between 0 and 1')
+df <- addNote(df, 'rescaled distance to between 0 and 1')
 getNotes(df)
 #> #    Comments                                                      
 #> --------------------------------------------------------------
-#> 1 :  Comments enabled                                                 
-#> 2 :  rescale speed to between 0 and 1                                 
-#> 3 :  rescale distance to between 0 and 1
+#> 1 :  dataset of speed and stopping distances of cars                  
+#> 2 :  from base package                                                
+#> 3 :  rescaled speed to between 0 and 1                                
+#> 4 :  rescaled distance to between 0 and 1
 ```
 
 ### Use with dplyr package
@@ -76,18 +83,18 @@ way to add notes as you proceed
 
 ``` r
 library(dplyr)
-df2 <- notes(cars)
+df2 <- notes(cars, 'dataset of speed and stopping distances of cars')
 df3 <- df2 %>% 
-  addNote('add a time variable based on dist / speed') %>%
+  addNote('added a time variable based on dist / speed') %>%
   mutate(time = dist / speed) %>%
-  addNote('filter out dist variable') %>%
+  addNote('filtered out dist variable') %>%
   select(-dist)
 getNotes(df3)
 #> #    Comments                                                      
 #> --------------------------------------------------------------
-#> 1 :  Comments enabled                                                 
-#> 2 :  add a time variable based on dist / speed                        
-#> 3 :  filter out dist variable
+#> 1 :  dataset of speed and stopping distances of cars                  
+#> 2 :  added a time variable based on dist / speed                      
+#> 3 :  filtered out dist variable
 ```
 
 ``` r
@@ -107,8 +114,8 @@ df3 <- deleteNote(df3,1,confirm = FALSE)
 getNotes(df3)
 #> #    Comments                                                      
 #> --------------------------------------------------------------
-#> 2 :  add a time variable based on dist / speed                        
-#> 3 :  filter out dist variable
+#> 2 :  added a time variable based on dist / speed                      
+#> 3 :  filtered out dist variable
 ```
 
 ### summary function
@@ -120,8 +127,8 @@ summary is run
 summary(df3)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  add a time variable based on dist / speed                      Mon Mar 18 19:31:49 2019 
-#> 3 :  filter out dist variable                                       Mon Mar 18 19:31:49 2019
+#> 2 :  added a time variable based on dist / speed                    Tue Mar 19 10:59:56 2019 
+#> 3 :  filtered out dist variable                                     Tue Mar 19 10:59:56 2019
 #>      speed           time      
 #>  Min.   : 4.0   Min.   :0.500  
 #>  1st Qu.:12.0   1st Qu.:1.921  
@@ -131,15 +138,35 @@ summary(df3)
 #>  Max.   :25.0   Max.   :5.714
 ```
 
-### timestamps
+### print function
 
-All notes are entered with a timestamp. You can use the
-‘show\_timestamps’ parameter to see these
+R objects with the commented class will include any comments when print
+is run with the ‘shownotes’ parameter set to TRUE
 
 ``` r
-getNotes(df3, show_timestamps = T)
+print(df3[1:5,], shownotes = T)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  add a time variable based on dist / speed                      Mon Mar 18 19:31:49 2019 
-#> 3 :  filter out dist variable                                       Mon Mar 18 19:31:49 2019
+#> 2 :  added a time variable based on dist / speed                    Tue Mar 19 10:59:56 2019 
+#> 3 :  filtered out dist variable                                     Tue Mar 19 10:59:56 2019 
+#> 
+#>   speed      time
+#> 1     4 0.5000000
+#> 2     4 2.5000000
+#> 3     7 0.5714286
+#> 4     7 3.1428571
+#> 5     8 2.0000000
+```
+
+### timestamps
+
+All notes are entered with a timestamp. You can use the ‘showtimestamps’
+parameter to see these
+
+``` r
+getNotes(df3, showtimestamps = T)
+#> #    Comments                                                       Time Stamp
+#> --------------------------------------------------------------------------------------------
+#> 2 :  added a time variable based on dist / speed                    Tue Mar 19 10:59:56 2019 
+#> 3 :  filtered out dist variable                                     Tue Mar 19 10:59:56 2019
 ```
