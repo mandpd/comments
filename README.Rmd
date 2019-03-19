@@ -26,8 +26,8 @@ It provides a set of functions to list, add, and delete comments.
 You can install the released version of comments from [github](https://github.com/mandpd/comments) with:
 
 ``` r
-library(devtools)
-install_github("mandpd/comments")
+library(githubinstall)
+gh_install_packages("comments")
 ```
 
 ## Example

@@ -20,8 +20,8 @@ You can install the released version of comments from
 [github](https://github.com/mandpd/comments) with:
 
 ``` r
-library(devtools)
-install_github("mandpd/comments")
+library(githubinstall)
+gh_install_packages("comments")
 ```
 
 ## Example
@@ -120,8 +120,8 @@ summary is run
 summary(df3)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  add a time variable based on dist / speed                      Mon Mar 18 15:27:25 2019 
-#> 3 :  filter out dist variable                                       Mon Mar 18 15:27:25 2019
+#> 2 :  add a time variable based on dist / speed                      Mon Mar 18 19:31:49 2019 
+#> 3 :  filter out dist variable                                       Mon Mar 18 19:31:49 2019
 #>      speed           time      
 #>  Min.   : 4.0   Min.   :0.500  
 #>  1st Qu.:12.0   1st Qu.:1.921  
@@ -140,6 +140,6 @@ All notes are entered with a timestamp. You can use the
 getNotes(df3, show_timestamps = T)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  add a time variable based on dist / speed                      Mon Mar 18 15:27:25 2019 
-#> 3 :  filter out dist variable                                       Mon Mar 18 15:27:25 2019
+#> 2 :  add a time variable based on dist / speed                      Mon Mar 18 19:31:49 2019 
+#> 3 :  filter out dist variable                                       Mon Mar 18 19:31:49 2019
 ```
