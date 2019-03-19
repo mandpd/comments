@@ -4,12 +4,12 @@
 \alias{getNotes}
 \title{getNotes Function}
 \usage{
-getNotes(x, show_timestamps = FALSE)
+getNotes(x, showtimestamps = FALSE)
 }
 \arguments{
 \item{x}{R object to print the comments from}
 
-\item{show_timestamps}{boolean to indicate if timestamps for each comment should be shown or hidden}
+\item{showtimestamps}{boolean to indicate if timestamps for each comment should be shown or hidden}
 }
 \value{
 print out of comments in tabular form

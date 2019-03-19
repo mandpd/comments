@@ -4,7 +4,7 @@
 \alias{getNotes.commented}
 \title{getNotes commented Function}
 \usage{
-\method{getNotes}{commented}(x, show_timestamps = FALSE)
+\method{getNotes}{commented}(x, showtimestamps = FALSE)
 }
 \arguments{
 \item{x}{R object to print the comments from}

@@ -102,8 +102,8 @@ summary(df3)
 
 ### timestamps
 
-All notes are entered with a timestamp. You can use the 'show_timestamps' parameter to see these
+All notes are entered with a timestamp. You can use the 'showtimestamps' parameter to see these
 
 ```{r}
-getNotes(df3, show_timestamps = T)
+getNotes(df3, showtimestamps = T)
 ```

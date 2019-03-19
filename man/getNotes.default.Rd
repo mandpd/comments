@@ -4,7 +4,7 @@
 \alias{getNotes.default}
 \title{getNotes Default Function}
 \usage{
-\method{getNotes}{default}(x, show_timestamps)
+\method{getNotes}{default}(x, showtimestamps)
 }
 \arguments{
 \item{x}{R object to print the comments from}

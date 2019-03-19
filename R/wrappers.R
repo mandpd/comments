@@ -10,30 +10,29 @@
 #' This function suppresses the class and comments attributes in the default print function.
 #' @param x R object to summarize
 #' @param ... other pass variables
+#' @param shownotes flag to show or hide notes accosiated with the R object
+#' @param showtimestamps boolean to indicate if timestamps for each comment should be shown or hidden
 #' @return print output
 #' @keywords print commented
 #' @export
-print.commented <- function(x, ...) {
-  getNotes(x, show_timestamps = T)
+print.commented <- function(x, ..., shownotes = F, showtimestamps = T) {
+  notes_x <- x
+  if(shownotes) {
+    getNotes(x, showtimestamps)
+  }
   # if this is a basic vector or list, suppress additional class output 2
   if(is.data.frame(x)) {
     NextMethod(x, ...)
-    return()
   }  else if (is.list(x)) {
-    obj2 <- x
     x <- list(unlist(x))
     NextMethod(x, ...)
-    invisible(x)
-    return()
   } else if (is.numeric(x)) {
-    obj2 <- x
     x <- c(x)
     NextMethod(x, ...)
-    invisible(x)
-    return()
+  } else {
+    NextMethod(x, ...)
   }
-  NextMethod(x, ...)
-  return()
+  invisible(notes_x)
 }
 
 
@@ -47,7 +46,7 @@ print.commented <- function(x, ...) {
 #' @keywords summary commented
 #' @export
 summary.commented <- function(object, ...) {
-  getNotes(object, show_timestamps = T)
+  getNotes(object, showtimestamps = T)
   NextMethod(object, ...)
 }
 

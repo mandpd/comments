@@ -32,7 +32,7 @@ notes <- function(x) {
 #'
 #' This function prints the comments associated with to the supplied R object.
 #' @param x R object to print the comments from
-#' @param show_timestamps boolean to indicate if timestamps for each comment should be shown or hidden
+#' @param showtimestamps boolean to indicate if timestamps for each comment should be shown or hidden
 #' @return print out of comments in tabular form
 #' @keywords get comments
 #' @export
@@ -40,7 +40,7 @@ notes <- function(x) {
 #' \dontrun{
 #' df2 <- getNotes(df2)
 #' }
-getNotes <- function(x, show_timestamps = FALSE) UseMethod("getNotes", x)
+getNotes <- function(x, showtimestamps = FALSE) UseMethod("getNotes", x)
 
 #' addNote Function
 #'
@@ -79,16 +79,16 @@ deleteNote <- function(x, index, confirm) UseMethod("deleteNote",x)
 #' @return print out of comments in tabular form
 #' @keywords get comments
 #' @export
-getNotes.commented <- function(x, show_timestamps = FALSE) {
+getNotes.commented <- function(x, showtimestamps = FALSE) {
   if (missing(x)) {
     cat('See ?getNotes for correct usage\n')
     return
   }
   cmtMatrix <- attr(x,'comments')
-  cat(format('#    Comments', width = 66), ifelse(show_timestamps, ' Time Stamp\n', '\n'))
-  cat(rep('-', ifelse(show_timestamps, 92, 62)),'\n', sep = '')
+  cat(format('#    Comments', width = 66), ifelse(showtimestamps, ' Time Stamp\n', '\n'))
+  cat(rep('-', ifelse(showtimestamps, 92, 62)),'\n', sep = '')
   for ( i in 1:nrow(cmtMatrix)) {
-    cat(as.character(format(cmtMatrix[i,1]), width = 3),': ', format(as.character(cmtMatrix[i,2]), width = 60), ' ', ifelse(show_timestamps, format(as.POSIXct(cmtMatrix[i,3][[1]]), '%c'), ' '), '\n')
+    cat(as.character(format(cmtMatrix[i,1]), width = 3),': ', format(as.character(cmtMatrix[i,2]), width = 60), ' ', ifelse(showtimestamps, format(as.POSIXct(cmtMatrix[i,3][[1]]), '%c'), ' '), '\n')
   }
   cat('\n')
 }
@@ -160,7 +160,7 @@ deleteNote.commented <- function(x,index, confirm) {
 #' @return message on correct use of function
 #' @keywords get comments
 #' @export
-getNotes.default <- function(x, show_timestamps) {
+getNotes.default <- function(x, showtimestamps) {
   cat('See ?getNotes for correct usage\n')
 }
 
