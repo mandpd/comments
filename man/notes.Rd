@@ -2,25 +2,25 @@
 % Please edit documentation in R/comments.R
 \name{notes}
 \alias{notes}
-\title{Notes Function}
+\title{notes Function}
 \usage{
-notes(x, comment = "")
+notes(x, showtimestamps = FALSE)
 }
 \arguments{
-\item{x}{R object to which comments should be added}
+\item{x}{R object to print the comments from}
 
-\item{comment}{optional comment to be added to R object}
+\item{showtimestamps}{boolean to indicate if timestamps for each comment should be shown or hidden}
 }
 \value{
-Original R object wrapped for use with comment functions
+print out of comments in tabular form
 }
 \description{
-This function enables comments to be added to the supplied R object.
+This function prints the comments associated with to the supplied R object.
 }
 \examples{
 \dontrun{
-df <- notes(cars)
-df <- notes(cars, 'based on cars dataset from http://mysite.com')
+df2 <- notes(df2)
 }
 }
 \keyword{comments}
+\keyword{get}

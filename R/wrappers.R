@@ -18,7 +18,7 @@
 print.commented <- function(x, ..., shownotes = F, showtimestamps = T) {
   notes_x <- x
   if(shownotes) {
-    getNotes(x, showtimestamps)
+    notes(x, showtimestamps)
   }
   # if this is a basic vector or list, suppress additional class output 2
   if(is.data.frame(x)) {
@@ -46,7 +46,7 @@ print.commented <- function(x, ..., shownotes = F, showtimestamps = T) {
 #' @keywords summary commented
 #' @export
 summary.commented <- function(object, ...) {
-  getNotes(object, showtimestamps = T)
+  notes(object, showtimestamps = T)
   NextMethod(object, ...)
 }
 

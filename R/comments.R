@@ -1,4 +1,4 @@
-#' Notes Function
+#' enableNotes Function
 #'
 #' This function enables comments to be added to the supplied R object.
 #' @param x R object to which comments should be added
@@ -8,10 +8,10 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' df <- notes(cars)
-#' df <- notes(cars, 'based on cars dataset from http://mysite.com')
+#' df <- enableNotes(cars)
+#' df <- enableNotes(cars, 'based on cars dataset from http://mysite.com')
 #' }
-notes <- function(x, comment = '') {
+enableNotes <- function(x, comment = '') {
   if (missing(x)) {
     stop('See ?notes for correct usage\n')
   }
@@ -36,7 +36,7 @@ notes <- function(x, comment = '') {
   invisible(x)
 }
 
-#' getNotes Function
+#' notes Function
 #'
 #' This function prints the comments associated with to the supplied R object.
 #' @param x R object to print the comments from
@@ -46,9 +46,9 @@ notes <- function(x, comment = '') {
 #' @export
 #' @examples
 #' \dontrun{
-#' df2 <- getNotes(df2)
+#' df2 <- notes(df2)
 #' }
-getNotes <- function(x, showtimestamps = FALSE) UseMethod("getNotes", x)
+notes <- function(x, showtimestamps = FALSE) UseMethod("notes", x)
 
 #' addNote Function
 #'
@@ -79,7 +79,7 @@ addNote <- function(x, comment) UseMethod("addNote", x)
 #' }
 deleteNote <- function(x, index, confirm) UseMethod("deleteNote",x)
 
-#' getNotes commented Function
+#' notes commented Function
 #'
 #' This function prints the comments associated with the supplied R object.
 #' @param x R object to print the comments from
@@ -87,9 +87,9 @@ deleteNote <- function(x, index, confirm) UseMethod("deleteNote",x)
 #' @return print out of comments in tabular form
 #' @keywords get comments
 #' @export
-getNotes.commented <- function(x, showtimestamps = FALSE) {
+notes.commented <- function(x, showtimestamps = FALSE) {
   if (missing(x)) {
-    stop('See ?getNotes for correct usage\n')
+    stop('See ?notes for correct usage\n')
   }
   cmtMatrix <- attr(x,'comments')
   cat(format('#    Comments', width = 66), ifelse(showtimestamps, ' Time Stamp\n', '\n'))
@@ -136,7 +136,7 @@ deleteNote.commented <- function(x,index, confirm) {
     confirm <- TRUE
   }
   if (confirm) {
-    getNotes(x, TRUE)
+    notes(x, TRUE)
   }
   if(missing(index)) {
     index <- readline("Enter # of the comment you wish to delete: ")
@@ -156,7 +156,7 @@ deleteNote.commented <- function(x,index, confirm) {
   invisible(x)
 }
 
-#' getNotes Default Function
+#' notes Default Function
 #'
 #' This function provides a help message when applied to an R object that has not been enabled for comments.
 #' @param x R object to print the comments from
@@ -164,8 +164,8 @@ deleteNote.commented <- function(x,index, confirm) {
 #' @return message on correct use of function
 #' @keywords get comments
 #' @export
-getNotes.default <- function(x, showtimestamps) {
-  cat('See ?getNotes for correct usage\n')
+notes.default <- function(x, showtimestamps) {
+  cat('See ?notes for correct usage\n')
 }
 
 #' addNote Default Function
