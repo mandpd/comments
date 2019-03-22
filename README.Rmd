@@ -101,10 +101,10 @@ summary(df3)
 
 ### print function
 
-R objects with the commented class will include any comments when print is run with the 'shownotes' parameter set to TRUE
+R objects with the commented class will include any comments when print is run with the 'notes' parameter set to TRUE
 
 ```{r}
-print(df3[1:5,], shownotes = T)
+print(df3[1:5,], notes = T)
 ```
 
 ### timestamps

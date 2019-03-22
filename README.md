@@ -126,8 +126,8 @@ summary is run
 summary(df3)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 19:32:59 2019 
-#> 3 :  filtered out dist variable                                     Thu Mar 21 19:32:59 2019
+#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 19:43:34 2019 
+#> 3 :  filtered out dist variable                                     Thu Mar 21 19:43:34 2019
 #>      speed           time      
 #>  Min.   : 4.0   Min.   :0.500  
 #>  1st Qu.:12.0   1st Qu.:1.921  
@@ -140,14 +140,14 @@ summary(df3)
 ### print function
 
 R objects with the commented class will include any comments when print
-is run with the ‘shownotes’ parameter set to TRUE
+is run with the ‘notes’ parameter set to TRUE
 
 ``` r
-print(df3[1:5,], shownotes = T)
+print(df3[1:5,], notes = T)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 19:32:59 2019 
-#> 3 :  filtered out dist variable                                     Thu Mar 21 19:32:59 2019 
+#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 19:43:34 2019 
+#> 3 :  filtered out dist variable                                     Thu Mar 21 19:43:34 2019 
 #> 
 #>   speed      time
 #> 1     4 0.5000000
@@ -166,6 +166,6 @@ parameter to see these
 notes(df3, showtimestamps = T)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 19:32:59 2019 
-#> 3 :  filtered out dist variable                                     Thu Mar 21 19:32:59 2019
+#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 19:43:34 2019 
+#> 3 :  filtered out dist variable                                     Thu Mar 21 19:43:34 2019
 ```

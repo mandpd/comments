@@ -10,14 +10,14 @@
 #' This function suppresses the class and comments attributes in the default print function.
 #' @param x R object to summarize
 #' @param ... other pass variables
-#' @param shownotes flag to show or hide notes accosiated with the R object
+#' @param notes flag to show or hide notes accosiated with the R object
 #' @param showtimestamps boolean to indicate if timestamps for each comment should be shown or hidden
 #' @return print output
 #' @keywords print commented
 #' @export
-print.commented <- function(x, ..., shownotes = F, showtimestamps = T) {
+print.commented <- function(x, ..., notes = F, showtimestamps = T) {
   notes_x <- x
-  if(shownotes) {
+  if(notes) {
     notes(x, showtimestamps)
   }
   # if this is a basic vector or list, suppress additional class output 2

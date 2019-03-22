@@ -4,14 +4,14 @@
 \alias{print.commented}
 \title{print commented Function}
 \usage{
-\method{print}{commented}(x, ..., shownotes = F, showtimestamps = T)
+\method{print}{commented}(x, ..., notes = F, showtimestamps = T)
 }
 \arguments{
 \item{x}{R object to summarize}
 
 \item{...}{other pass variables}
 
-\item{shownotes}{flag to show or hide notes accosiated with the R object}
+\item{notes}{flag to show or hide notes accosiated with the R object}
 
 \item{showtimestamps}{boolean to indicate if timestamps for each comment should be shown or hidden}
 }
