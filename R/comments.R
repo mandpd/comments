@@ -1,4 +1,4 @@
-#' enableNotes Function
+#' enotes Function
 #'
 #' This function enables comments to be added to the supplied R object.
 #' @param x R object to which comments should be added
@@ -8,10 +8,10 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' df <- enableNotes(cars)
-#' df <- enableNotes(cars, 'based on cars dataset from http://mysite.com')
+#' df <- enotes(cars)
+#' df <- enotes(cars, 'based on cars dataset from http://mysite.com')
 #' }
-enableNotes <- function(x, comment = '') {
+enotes <- function(x, comment = '') {
   if (missing(x)) {
     stop('See ?notes for correct usage\n')
   }
@@ -50,7 +50,7 @@ enableNotes <- function(x, comment = '') {
 #' }
 notes <- function(x, showtimestamps = FALSE) UseMethod("notes", x)
 
-#' addNote Function
+#' anote Function
 #'
 #' This function allows a comment to be added to the supplied R object.
 #' @param x R object to add a comment to
@@ -60,11 +60,11 @@ notes <- function(x, showtimestamps = FALSE) UseMethod("notes", x)
 #' @export
 #' @examples
 #'  \dontrun{
-#' df2 <- addNotes(df2, 'My new note')
+#' df2 <- anotes(df2, 'My new note')
 #' }
-addNote <- function(x, comment) UseMethod("addNote", x)
+anote <- function(x, comment) UseMethod("anote", x)
 
-#' deleteNote Function
+#' dnote Function
 #'
 #' This function allows a comment to be removed from the list of comments associated with the supplied R object.
 #' @param x R object to remove the comment from
@@ -75,9 +75,9 @@ addNote <- function(x, comment) UseMethod("addNote", x)
 #' @export
 #' @examples
 #'  \dontrun{
-#' df2 <- deleteNote(df2,2,T)
+#' df2 <- dnote(df2,2,T)
 #' }
-deleteNote <- function(x, index, confirm) UseMethod("deleteNote",x)
+dnote <- function(x, index, confirm) UseMethod("dnote",x)
 
 #' notes commented Function
 #'
@@ -100,7 +100,7 @@ notes.commented <- function(x, showtimestamps = FALSE) {
   cat('\n')
 }
 
-#' addNote commented Function
+#' anote commented Function
 #'
 #' This function allows a comment to be added to the supplied R object.
 #' @param x R object to add a comment to
@@ -108,9 +108,9 @@ notes.commented <- function(x, showtimestamps = FALSE) {
 #' @return Original R object with added comment
 #' @keywords add comment
 #' @export
-addNote.commented <- function(x,comment) {
+anote.commented <- function(x,comment) {
   if (missing(x) || missing(comment)) {
-    stop('See ?addNote for correct usage\n')
+    stop('See ?anote for correct usage\n')
   }
   cmtMatrix <- attr(x, 'comments')
   idx <- as.numeric(cmtMatrix[nrow(cmtMatrix),'comment_id'])
@@ -119,7 +119,7 @@ addNote.commented <- function(x,comment) {
   invisible(x)
 }
 
-#' deleteNote commented Function
+#' dnote commented Function
 #'
 #' This function allows a comment to be removed from the list of comments associated with the supplied R object.
 #' @param x R object to remove the comment from
@@ -128,9 +128,9 @@ addNote.commented <- function(x,comment) {
 #' @return Original R object with selected comment removed from comments attribute
 #' @keywords delete comment
 #' @export
-deleteNote.commented <- function(x,index, confirm) {
+dnote.commented <- function(x,index, confirm) {
   if (missing(x)) {
-    stop('See ?deleteNote for correct usage\n')
+    stop('See ?dnote for correct usage\n')
   }
   if(missing(confirm)) {
     confirm <- TRUE
@@ -168,7 +168,7 @@ notes.default <- function(x, showtimestamps) {
   cat('See ?notes for correct usage\n')
 }
 
-#' addNote Default Function
+#' anote Default Function
 #'
 #' This function provides a help message when applied to an R object that has not been enabled for comments.
 #' @param x R object to add a comment to
@@ -176,11 +176,11 @@ notes.default <- function(x, showtimestamps) {
 #' @return message on correct use of function
 #' @keywords add comment
 #' @export
-addNote.default <- function(x,comment) {
-  ('See ?addNote for correct usage\n')
+anote.default <- function(x,comment) {
+  ('See ?anote for correct usage\n')
 }
 
-#' deleteNote Default Function
+#' dnote Default Function
 #'
 #' This function provides a help message when applied to an R object that has not been enabled for comments.
 #' @param x R object to remove the comment from
@@ -189,7 +189,7 @@ addNote.default <- function(x,comment) {
 #' @return message on correct use of function
 #' @keywords delete comment
 #' @export
-deleteNote.default <- function(x, index, confirm) {
-  cat('See ?deleteNote for correct usage\n')
+dnote.default <- function(x, index, confirm) {
+  cat('See ?dnote for correct usage\n')
 }
 

@@ -32,33 +32,33 @@ install_github("mandpd/comments")
 ## Example
 
 The comments package allows you to add comments to your data sets as you manipulate them, e.g. during your exploratory data analysis phase.
-To enable a data set to contain comments, first apply the enableNotes() function to it. You can optionally add an intial comment, e.g. a summary of the contents of the dataset, or the source of the dataset. Additional notes can be added using addNote()
+To enable a data set to contain comments, first apply the enotes() function to it. You can optionally add an intial comment, e.g. a summary of the contents of the dataset, or the source of the dataset. Additional notes can be added using anote()
 
-### enableNotes()
+### enotes() - enable an R object to have notes
 
 ```{r}
 library(comments)
-df <- enableNotes(cars, 'dataset of speed and stopping distances of cars')
-df <- addNote(df, 'from base package') 
+df <- enotes(cars, 'dataset of speed and stopping distances of cars')
+df <- anote(df, 'from base package') 
 ```
 
-This enables the use of addNote(), deleteNote(), and notes() with the cars data.frame
+This enables the use of anote(), dnote(), and notes() with the cars data.frame
 
-### notes()
+### notes() - list the notes attached to an R object
 
 ```{r}
 notes(df)
 ```
 
-### addNote()
+### anote() - add a new note to the list attached to an R object
 
-Let's rescale the values in the speed and distance columns to be between 0 and 1, add notes explaining this, and then print out the notes. An individual comment can contain a maximum of 66 characters. If your comment needs to be longer, use the addNote function multiple times.
+Let's rescale the values in the speed and distance columns to be between 0 and 1, add notes explaining this, and then print out the notes. An individual comment can contain a maximum of 66 characters. If your comment needs to be longer, use the anote function multiple times.
 
 ```{r}
 rescale_param <- function(x) { (x-min(x)) / (max(x)- min(x))}
 df[] <- lapply(df, rescale_param)
-df <- addNote(df, 'rescaled speed to between 0 and 1')
-df <- addNote(df, 'rescaled distance to between 0 and 1')
+df <- anote(df, 'rescaled speed to between 0 and 1')
+df <- anote(df, 'rescaled distance to between 0 and 1')
 notes(df)
 ```
 
@@ -69,11 +69,11 @@ way to add notes as you proceed
 
 ```{r message=F }
 library(dplyr)
-df2 <- enableNotes(cars, 'dataset of speed and stopping distances of cars')
+df2 <- enotes(cars, 'dataset of speed and stopping distances of cars')
 df3 <- df2 %>% 
-  addNote('added a time variable based on dist / speed') %>%
+  anote('added a time variable based on dist / speed') %>%
   mutate(time = dist / speed) %>%
-  addNote('filtered out dist variable') %>%
+  anote('filtered out dist variable') %>%
   select(-dist)
 notes(df3)
 ```
@@ -82,12 +82,12 @@ notes(df3)
 glimpse(df3)
 ```
 
-### deleteNote()
+### dnote() - delete a note from the list of notes attached to an R object
 
 You can selectively remove comments using the comment id
 
 ```{r}
-df3 <- deleteNote(df3,1,confirm = FALSE)
+df3 <- dnote(df3,1,confirm = FALSE)
 notes(df3)
 ```
 

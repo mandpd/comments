@@ -27,23 +27,23 @@ install\_github(“mandpd/comments”)
 
 The comments package allows you to add comments to your data sets as you
 manipulate them, e.g. during your exploratory data analysis phase. To
-enable a data set to contain comments, first apply the enableNotes()
-function to it. You can optionally add an intial comment, e.g. a summary
-of the contents of the dataset, or the source of the dataset. Additional
-notes can be added using addNote()
+enable a data set to contain comments, first apply the enotes() function
+to it. You can optionally add an intial comment, e.g. a summary of the
+contents of the dataset, or the source of the dataset. Additional notes
+can be added using anote()
 
-### enableNotes()
+### enotes() - enable an R object to have notes
 
 ``` r
 library(comments)
-df <- enableNotes(cars, 'dataset of speed and stopping distances of cars')
-df <- addNote(df, 'from base package') 
+df <- enotes(cars, 'dataset of speed and stopping distances of cars')
+df <- anote(df, 'from base package') 
 ```
 
-This enables the use of addNote(), deleteNote(), and notes() with the
-cars data.frame
+This enables the use of anote(), dnote(), and notes() with the cars
+data.frame
 
-### notes()
+### notes() - list the notes attached to an R object
 
 ``` r
 notes(df)
@@ -53,18 +53,18 @@ notes(df)
 #> 2 :  from base package
 ```
 
-### addNote()
+### anote() - add a new note to the list attached to an R object
 
 Let’s rescale the values in the speed and distance columns to be between
 0 and 1, add notes explaining this, and then print out the notes. An
 individual comment can contain a maximum of 66 characters. If your
-comment needs to be longer, use the addNote function multiple times.
+comment needs to be longer, use the anote function multiple times.
 
 ``` r
 rescale_param <- function(x) { (x-min(x)) / (max(x)- min(x))}
 df[] <- lapply(df, rescale_param)
-df <- addNote(df, 'rescaled speed to between 0 and 1')
-df <- addNote(df, 'rescaled distance to between 0 and 1')
+df <- anote(df, 'rescaled speed to between 0 and 1')
+df <- anote(df, 'rescaled distance to between 0 and 1')
 notes(df)
 #> #    Comments                                                      
 #> --------------------------------------------------------------
@@ -82,11 +82,11 @@ way to add notes as you proceed
 
 ``` r
 library(dplyr)
-df2 <- enableNotes(cars, 'dataset of speed and stopping distances of cars')
+df2 <- enotes(cars, 'dataset of speed and stopping distances of cars')
 df3 <- df2 %>% 
-  addNote('added a time variable based on dist / speed') %>%
+  anote('added a time variable based on dist / speed') %>%
   mutate(time = dist / speed) %>%
-  addNote('filtered out dist variable') %>%
+  anote('filtered out dist variable') %>%
   select(-dist)
 notes(df3)
 #> #    Comments                                                      
@@ -104,12 +104,12 @@ glimpse(df3)
 #> $ time  <dbl> 0.5000000, 2.5000000, 0.5714286, 3.1428571, 2.0000000, 1.1…
 ```
 
-### deleteNote()
+### dnote() - delete a note from the list of notes attached to an R object
 
 You can selectively remove comments using the comment id
 
 ``` r
-df3 <- deleteNote(df3,1,confirm = FALSE)
+df3 <- dnote(df3,1,confirm = FALSE)
 notes(df3)
 #> #    Comments                                                      
 #> --------------------------------------------------------------
@@ -126,8 +126,8 @@ summary is run
 summary(df3)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 18:06:11 2019 
-#> 3 :  filtered out dist variable                                     Thu Mar 21 18:06:11 2019
+#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 19:32:59 2019 
+#> 3 :  filtered out dist variable                                     Thu Mar 21 19:32:59 2019
 #>      speed           time      
 #>  Min.   : 4.0   Min.   :0.500  
 #>  1st Qu.:12.0   1st Qu.:1.921  
@@ -146,8 +146,8 @@ is run with the ‘shownotes’ parameter set to TRUE
 print(df3[1:5,], shownotes = T)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 18:06:11 2019 
-#> 3 :  filtered out dist variable                                     Thu Mar 21 18:06:11 2019 
+#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 19:32:59 2019 
+#> 3 :  filtered out dist variable                                     Thu Mar 21 19:32:59 2019 
 #> 
 #>   speed      time
 #> 1     4 0.5000000
@@ -166,6 +166,6 @@ parameter to see these
 notes(df3, showtimestamps = T)
 #> #    Comments                                                       Time Stamp
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 18:06:11 2019 
-#> 3 :  filtered out dist variable                                     Thu Mar 21 18:06:11 2019
+#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 19:32:59 2019 
+#> 3 :  filtered out dist variable                                     Thu Mar 21 19:32:59 2019
 ```
