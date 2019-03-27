@@ -4,18 +4,20 @@
 \alias{notes}
 \title{notes Function}
 \usage{
-notes(x, showtimestamps = FALSE)
+notes(x, showtimestamps = FALSE, showcategories = FALSE)
 }
 \arguments{
 \item{x}{R object to print the comments from}
 
 \item{showtimestamps}{boolean to indicate if timestamps for each comment should be shown or hidden}
+
+\item{showcategories}{boolean to indicate if comment categories for each comment should be shown or hidden}
 }
 \value{
 print out of comments in tabular form
 }
 \description{
-This function prints the comments associated with to the supplied R object.
+This function prints the comments associated with the supplied R object.
 }
 \examples{
 \dontrun{

@@ -12,7 +12,9 @@ status](https://codecov.io/gh/mandpd/comments/branch/master/graph/badge.svg)](ht
 
 This package allows you to add an attribute to your R objects that can
 be used to store comments. It provides a set of functions to list, add,
-and delete comments.
+and delete comments. In addition, text categories can be associated with
+comments. There is a special category of ‘todo’ comments which have
+their own functions to list, add, and delete them.
 
 ## Installation
 
@@ -47,8 +49,8 @@ data.frame
 
 ``` r
 notes(df)
-#> #    Comments                                                      
-#> --------------------------------------------------------------
+#> #    Comments                                                       
+#> ----------------------------------------------------------------------
 #> 1 :  dataset of speed and stopping distances of cars                  
 #> 2 :  from base package
 ```
@@ -66,8 +68,8 @@ df[] <- lapply(df, rescale_param)
 df <- anote(df, 'rescaled speed to between 0 and 1')
 df <- anote(df, 'rescaled distance to between 0 and 1')
 notes(df)
-#> #    Comments                                                      
-#> --------------------------------------------------------------
+#> #    Comments                                                       
+#> ----------------------------------------------------------------------
 #> 1 :  dataset of speed and stopping distances of cars                  
 #> 2 :  from base package                                                
 #> 3 :  rescaled speed to between 0 and 1                                
@@ -89,8 +91,8 @@ df3 <- df2 %>%
   anote('filtered out dist variable') %>%
   select(-dist)
 notes(df3)
-#> #    Comments                                                      
-#> --------------------------------------------------------------
+#> #    Comments                                                       
+#> ----------------------------------------------------------------------
 #> 1 :  dataset of speed and stopping distances of cars                  
 #> 2 :  added a time variable based on dist / speed                      
 #> 3 :  filtered out dist variable
@@ -111,8 +113,8 @@ You can selectively remove comments using the comment id
 ``` r
 df3 <- dnote(df3,1,confirm = FALSE)
 notes(df3)
-#> #    Comments                                                      
-#> --------------------------------------------------------------
+#> #    Comments                                                       
+#> ----------------------------------------------------------------------
 #> 2 :  added a time variable based on dist / speed                      
 #> 3 :  filtered out dist variable
 ```
@@ -124,10 +126,10 @@ summary is run
 
 ``` r
 summary(df3)
-#> #    Comments                                                       Time Stamp
+#> #    Comments                                                       Time Stamp       
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 19:43:34 2019 
-#> 3 :  filtered out dist variable                                     Thu Mar 21 19:43:34 2019
+#> 2 :  added a time variable based on dist / speed                    03/27/2019 11:21   
+#> 3 :  filtered out dist variable                                     03/27/2019 11:21
 #>      speed           time      
 #>  Min.   : 4.0   Min.   :0.500  
 #>  1st Qu.:12.0   1st Qu.:1.921  
@@ -144,10 +146,10 @@ is run with the ‘notes’ parameter set to TRUE
 
 ``` r
 print(df3[1:5,], notes = T)
-#> #    Comments                                                       Time Stamp
+#> #    Comments                                                       Time Stamp       
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 19:43:34 2019 
-#> 3 :  filtered out dist variable                                     Thu Mar 21 19:43:34 2019 
+#> 2 :  added a time variable based on dist / speed                    03/27/2019 11:21   
+#> 3 :  filtered out dist variable                                     03/27/2019 11:21   
 #> 
 #>   speed      time
 #> 1     4 0.5000000
@@ -164,8 +166,82 @@ parameter to see these
 
 ``` r
 notes(df3, showtimestamps = T)
-#> #    Comments                                                       Time Stamp
+#> #    Comments                                                       Time Stamp       
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    Thu Mar 21 19:43:34 2019 
-#> 3 :  filtered out dist variable                                     Thu Mar 21 19:43:34 2019
+#> 2 :  added a time variable based on dist / speed                    03/27/2019 11:21   
+#> 3 :  filtered out dist variable                                     03/27/2019 11:21
+```
+
+### categories
+
+All notes are entered with a category. This is a text tag of up to 10
+characters that can be attached to a comment when it is first added. You
+can use the ‘showcategories’ parameter to see these. By default, a
+comment is tagged with ‘none’.
+
+``` r
+notes(df3, showcategories = T)
+#> #    Comments                                                        Category
+#> -------------------------------------------------------------------------------
+#> 2 :  added a time variable based on dist / speed                     none      
+#> 3 :  filtered out dist variable                                      none
+```
+
+You can override the default tag when adding a comment by setting the
+‘category’ parameter to your tag value.
+
+``` r
+df3 <- anote(df3, 'the dist values appear skewed', category = 'review')
+notes(df3, showcategories = T)
+#> #    Comments                                                        Category
+#> -------------------------------------------------------------------------------
+#> 2 :  added a time variable based on dist / speed                     none      
+#> 3 :  filtered out dist variable                                      none      
+#> 4 :  the dist values appear skewed                                   review
+```
+
+### atodo() - add a new todo comment to the list of comments attached to an R object
+
+Todo comments are designed to hold comments on additional tasks or
+actions to be performed on an R object. An individual todo comment can
+contain a maximum of 66 characters. If your todo comment needs to be
+longer, use the atodo function multiple times.
+
+``` r
+df <- atodo(df, 'determine if dist is normally distributed')
+```
+
+### todos() - lists the todo comments attached to an R object
+
+``` r
+todos(df)
+#> #    To Do                                                          
+#> ----------------------------------------------------------------------
+#> 5 :  determine if dist is normally distributed
+```
+
+### ‘showcategories’ parameter
+
+Todo comments appear in the output of notes(). You can use the
+showcategories parameter to identify which notes are todo notes
+
+``` r
+notes(df, showcategories = T)
+#> #    Comments                                                        Category
+#> -------------------------------------------------------------------------------
+#> 1 :  dataset of speed and stopping distances of cars                 none      
+#> 2 :  from base package                                               none      
+#> 3 :  rescaled speed to between 0 and 1                               none      
+#> 4 :  rescaled distance to between 0 and 1                            none      
+#> 5 :  determine if dist is normally distributed                       todo
+```
+
+### dtodo() - delete a todo comment from the list of comments attached to an R object
+
+You can selectively remove comments using the comment id
+
+``` r
+df <- dtodo(df,5,confirm = FALSE)
+todos(df)
+#> [1] "None"
 ```

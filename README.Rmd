@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 # comments
 
 This package allows you to add an attribute to your R objects that can be used to store comments. 
-It provides a set of functions to list, add, and delete comments.
+It provides a set of functions to list, add, and delete comments. In addition, text categories can be associated with comments. There is a special category of 'todo' comments which have their own functions to list, add, and delete them.
 
 ## Installation
 
@@ -114,3 +114,49 @@ All notes are entered with a timestamp. You can use the 'showtimestamps' paramet
 ```{r}
 notes(df3, showtimestamps = T)
 ```
+
+### categories
+
+All notes are entered with a category. This is a text tag of up to 10 characters that can be attached to a comment when it is first added.  You can use the 'showcategories' parameter to see these. By default, a comment is tagged with 'none'.
+
+```{r}
+notes(df3, showcategories = T)
+```
+
+You can override the default tag when adding a comment by setting the 'category' parameter to your tag value.
+
+```{r}
+df3 <- anote(df3, 'the dist values appear skewed', category = 'review')
+notes(df3, showcategories = T)
+```
+
+### atodo() - add a new todo comment to the list of comments attached to an R object
+
+Todo comments are designed to hold comments on additional tasks or actions to be performed on an R object. An individual todo comment can contain a maximum of 66 characters. If your todo comment needs to be longer, use the atodo function multiple times.
+
+```{r}
+df <- atodo(df, 'determine if dist is normally distributed')
+```
+
+### todos() - lists the todo comments attached to an R object
+
+```{r}
+todos(df)
+```
+
+### 'showcategories' parameter
+Todo comments appear in the output of notes(). You can use the showcategories parameter to identify which notes are todo notes
+
+```{r}
+notes(df, showcategories = T)
+```
+
+### dtodo() - delete a todo comment from the list of comments attached to an R object
+
+You can selectively remove comments using the comment id
+
+```{r}
+df <- dtodo(df,5,confirm = FALSE)
+todos(df)
+```
+

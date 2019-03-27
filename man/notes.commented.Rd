@@ -4,12 +4,15 @@
 \alias{notes.commented}
 \title{notes commented Function}
 \usage{
-\method{notes}{commented}(x, showtimestamps = FALSE)
+\method{notes}{commented}(x, showtimestamps = FALSE,
+  showcategories = FALSE)
 }
 \arguments{
 \item{x}{R object to print the comments from}
 
 \item{showtimestamps}{boolean to indicate if timestamps for each comment should be shown or hidden}
+
+\item{showcategories}{boolean to indicate if the category of each comment should be shown or hidden}
 }
 \value{
 print out of comments in tabular form

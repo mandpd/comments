@@ -19,16 +19,16 @@ test_that('> 66 character comments are rejected with correct error message', {
 test_that('object is enabled for comments', {
   # data.frame
   df <- enotes(cars)
-  expect_equal(capture_output(notes(df)), '#    Comments                                                      \n--------------------------------------------------------------\n1 :  Comments enabled                                                 \n')
+  expect_equal(capture_output(notes(df)), '#    Comments                                                       \n----------------------------------------------------------------------\n1 :  Comments enabled                                                 \n')
   # vector
   df <- enotes(c(1,2,3,4,5,6))
-  expect_equal(capture_output(notes(df)), '#    Comments                                                      \n--------------------------------------------------------------\n1 :  Comments enabled                                                 \n')
+  expect_equal(capture_output(notes(df)), '#    Comments                                                       \n----------------------------------------------------------------------\n1 :  Comments enabled                                                 \n')
   # list
   df <- enotes(list(1,2,3,4,'a','b'))
-  expect_equal(capture_output(notes(df)), '#    Comments                                                      \n--------------------------------------------------------------\n1 :  Comments enabled                                                 \n')
+  expect_equal(capture_output(notes(df)), '#    Comments                                                       \n----------------------------------------------------------------------\n1 :  Comments enabled                                                 \n')
   })
 
 test_that('comments parameter works correctly', {
   df <- enotes(cars, comment = 'first comment')
-  expect_equal(capture_output(notes(df)), '#    Comments                                                      \n--------------------------------------------------------------\n1 :  first comment                                                    \n')
+  expect_equal(capture_output(notes(df)), '#    Comments                                                       \n----------------------------------------------------------------------\n1 :  first comment                                                    \n')
 })

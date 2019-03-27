@@ -4,12 +4,14 @@
 \alias{anote.commented}
 \title{anote commented Function}
 \usage{
-\method{anote}{commented}(x, comment)
+\method{anote}{commented}(x, comment, category = "none")
 }
 \arguments{
 \item{x}{R object to add a comment to}
 
 \item{comment}{the text of the comment to add}
+
+\item{category}{optional category tag for comment}
 }
 \value{
 Original R object with added comment

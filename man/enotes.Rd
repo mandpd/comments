@@ -4,12 +4,14 @@
 \alias{enotes}
 \title{enotes Function}
 \usage{
-enotes(x, comment = "")
+enotes(x, comment = "", category = "none")
 }
 \arguments{
 \item{x}{R object to which comments should be added}
 
 \item{comment}{optional comment to be added to R object}
+
+\item{category}{optional category tag for comment}
 }
 \value{
 Original R object wrapped for use with comment functions

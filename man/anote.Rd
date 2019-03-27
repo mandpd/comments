@@ -4,12 +4,14 @@
 \alias{anote}
 \title{anote Function}
 \usage{
-anote(x, comment)
+anote(x, comment, category = "none")
 }
 \arguments{
 \item{x}{R object to add a comment to}
 
 \item{comment}{the text of the comment to add}
+
+\item{category}{optional category tag for comment}
 }
 \value{
 Original R object with added comment
@@ -19,7 +21,7 @@ This function allows a comment to be added to the supplied R object.
 }
 \examples{
  \dontrun{
-df2 <- anotes(df2, 'My new note')
+df2 <- anote(df2, 'My new note')
 }
 }
 \keyword{add}
