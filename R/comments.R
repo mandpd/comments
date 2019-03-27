@@ -225,7 +225,15 @@ dnote.commented <- function(x, index, confirm) {
   if (ok == "Y") {
     cmtMatrix <- attr(x, 'comments')
     cmtMatrix <- cmtMatrix[-as.numeric(index),]
-    attr(x,'comments') <- cmtMatrix
+    if(is.matrix(cmtMatrix)) {
+      # re-index notes
+      cmtMatrix[,'comment_id'] <- c(1:nrow(cmtMatrix))
+      attr(x,'comments') <- cmtMatrix
+    } else {
+      cmtMatrix$commed_id <- 1
+      attr(x,'comments') <- matrix(cmtMatrix, nrow= 1)
+    }
+
   }
   invisible(x)
 }
@@ -277,9 +285,10 @@ dtodo.commented <- function(x, index, confirm) {
     ok <- "Y"
   }
   if (ok == "Y") {
-    cmtMatrix <- attr(x, 'comments')
-    cmtMatrix <- cmtMatrix[-as.numeric(index),]
-    attr(x,'comments') <- cmtMatrix
+    x <- dnote(x, index = index, confirm = F)
+    #cmtMatrix <- attr(x, 'comments')
+    #cmtMatrix <- cmtMatrix[-as.numeric(index),]
+    #attr(x,'comments') <- cmtMatrix
   }
   invisible(x)
 }
