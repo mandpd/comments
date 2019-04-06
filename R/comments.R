@@ -176,14 +176,18 @@ notes.commented <- function(x, ids = NULL, commentonly = NULL, showtimestamps = 
     cat(format('#    Comments', width = 66), ifelse(showtimestamps, ' Time Stamp      ', ''), ifelse(showcategories, ' Category\n', '\n'))
     cat(rep('-', ifelse(showtimestamps, ifelse(showcategories, 96, 92), ifelse(showcategories, 79, 70))),'\n', sep = '')
   }
-
+  output <- ''
   for ( i in 1:nrow(cmtMatrix)) {
     if(commentonly) {
-      cat(as.character(cmtMatrix[i,2]), '\n')
+      output <- paste(output, as.character(cmtMatrix[i,2]), ' ')
     } else {
     cat(as.character(format(cmtMatrix[i,1]), width = 3),': ', format(as.character(cmtMatrix[i,2]), width = 60), ' ', ifelse(showtimestamps, format(as.POSIXct(cmtMatrix[i,3][[1]]), '%m/%d/%Y %H:%M '), ''), ifelse(showcategories, format(as.character(cmtMatrix[i,4][[1]]), width = 9), ''), '\n')
   }
   #cat('\n')
+  }
+
+  if(commentonly) {
+    return (output)
   }
 }
 

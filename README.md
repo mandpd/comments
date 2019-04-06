@@ -56,22 +56,22 @@ notes(df)
 ```
 
 You can also extract a specific note by providing a column vector of
-comment ids
+comment ids. A single comment will be printed with only the comment
+text, unless the ‘commentonly’ paramter is set to false
 
 ``` r
-notes(df,2)
+notes(df,1, commentonly = FALSE)
 #> #    Comments                                                       
 #> ----------------------------------------------------------------------
-#> 2 :  from base package
+#> 1 :  dataset of speed and stopping distances of cars
 ```
-
-### rnotes() - retrieve the raw notes matrix object
 
 This can be useful if you want to use the text from a specific comment,
 for example in the title of a plot
 
 ``` r
-plot(df, main = rnotes(df)[1,2][[1]])
+
+plot(df, main = notes(df,1))
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
@@ -149,8 +149,8 @@ summary is run
 summary(df3)
 #> #    Comments                                                       Time Stamp       
 #> --------------------------------------------------------------------------------------------
-#> 1 :  added a time variable based on dist / speed                    04/06/2019 11:35   
-#> 2 :  filtered out dist variable                                     04/06/2019 11:35
+#> 1 :  added a time variable based on dist / speed                    04/06/2019 12:30   
+#> 2 :  filtered out dist variable                                     04/06/2019 12:30
 #>      speed           time      
 #>  Min.   : 4.0   Min.   :0.500  
 #>  1st Qu.:12.0   1st Qu.:1.921  
@@ -169,9 +169,8 @@ is run with the ‘notes’ parameter set to TRUE
 print(df3[1:5,], notes = T)
 #> #    Comments                                                       Time Stamp       
 #> --------------------------------------------------------------------------------------------
-#> 1 :  added a time variable based on dist / speed                    04/06/2019 11:35   
-#> 2 :  filtered out dist variable                                     04/06/2019 11:35   
-#> 
+#> 1 :  added a time variable based on dist / speed                    04/06/2019 12:30   
+#> 2 :  filtered out dist variable                                     04/06/2019 12:30   
 #>   speed      time
 #> 1     4 0.5000000
 #> 2     4 2.5000000
@@ -189,8 +188,8 @@ parameter to see these
 notes(df3, showtimestamps = T)
 #> #    Comments                                                       Time Stamp       
 #> --------------------------------------------------------------------------------------------
-#> 1 :  added a time variable based on dist / speed                    04/06/2019 11:35   
-#> 2 :  filtered out dist variable                                     04/06/2019 11:35
+#> 1 :  added a time variable based on dist / speed                    04/06/2019 12:30   
+#> 2 :  filtered out dist variable                                     04/06/2019 12:30
 ```
 
 ### categories

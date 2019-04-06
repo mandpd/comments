@@ -50,17 +50,18 @@ This enables the use of anote(), dnote(), notes(), and rnotes() with the cars da
 notes(df)
 ```
 
-You can also extract a specific note by providing a column vector of comment ids
-```{r}
-notes(df,2)
-```
+You can also extract a specific note by providing a column vector of comment ids. A single comment will be printed
+with only the comment text, unless the 'commentonly' paramter is set to false 
 
-### rnotes() - retrieve the raw notes matrix object
+```{r}
+notes(df,1, commentonly = FALSE)
+```
 
 This can be useful if you want to use the text from a specific comment, for example in the title of a plot
 
 ```{r}
-plot(df, main = rnotes(df)[1,2][[1]])
+
+plot(df, main = notes(df,1))
 ```
 
 
