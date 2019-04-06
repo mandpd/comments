@@ -4,10 +4,15 @@
 \alias{notes.default}
 \title{notes Default Function}
 \usage{
-\method{notes}{default}(x, showtimestamps, showcategories)
+\method{notes}{default}(x, ids, commentonly, showtimestamps,
+  showcategories)
 }
 \arguments{
 \item{x}{R object to print the comments from}
+
+\item{ids}{vector of comment id's to return}
+
+\item{commentonly}{default = FALSE, set to TRUE to only return the comment text}
 
 \item{showtimestamps}{boolean to indicate if timestamps for each comment should be shown or hidden}
 

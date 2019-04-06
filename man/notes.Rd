@@ -4,10 +4,15 @@
 \alias{notes}
 \title{notes Function}
 \usage{
-notes(x, showtimestamps = FALSE, showcategories = FALSE)
+notes(x, ids = NULL, commentonly = FALSE, showtimestamps = FALSE,
+  showcategories = FALSE)
 }
 \arguments{
 \item{x}{R object to print the comments from}
+
+\item{ids}{vector of comment id's to return}
+
+\item{commentonly}{default = FALSE, set to TRUE to only return the comment text}
 
 \item{showtimestamps}{boolean to indicate if timestamps for each comment should be shown or hidden}
 
@@ -17,11 +22,11 @@ notes(x, showtimestamps = FALSE, showcategories = FALSE)
 print out of comments in tabular form
 }
 \description{
-This function prints the comments associated with the supplied R object.
+This function prints the comments associated with the supplied R object. If a single comment is specified by
 }
 \examples{
 \dontrun{
-df2 <- notes(df2)
+df <- notes(df)
 }
 }
 \keyword{comments}

@@ -39,8 +39,10 @@ enotes <- function(x, comment = '', category = 'none') {
 
 #' notes Function
 #'
-#' This function prints the comments associated with the supplied R object.
+#' This function prints the comments associated with the supplied R object. If a single comment is specified by
 #' @param x R object to print the comments from
+#' @param ids vector of comment id's to return
+#' @param commentonly default = FALSE, set to TRUE to only return the comment text
 #' @param showtimestamps boolean to indicate if timestamps for each comment should be shown or hidden
 #' @param showcategories boolean to indicate if comment categories for each comment should be shown or hidden
 #' @return print out of comments in tabular form
@@ -48,9 +50,22 @@ enotes <- function(x, comment = '', category = 'none') {
 #' @export
 #' @examples
 #' \dontrun{
-#' df2 <- notes(df2)
+#' df <- notes(df)
 #' }
-notes <- function(x, showtimestamps = FALSE, showcategories = FALSE) UseMethod("notes", x)
+notes <- function(x, ids = NULL, commentonly = FALSE, showtimestamps = FALSE, showcategories = FALSE) UseMethod("notes", x)
+
+#' rnotes Function
+#'
+#' This function returns the raw comments matrix associated with the supplied R object.
+#' @param x R object to print the comments from
+#' @return comments matrix
+#' @keywords get comments matrix
+#' @export
+#' @examples
+#' \dontrun{
+#' df <- rnotes(df)
+#' }
+rnotes <- function(x) UseMethod("rnotes", x)
 
 #' todos Function
 #'
@@ -130,19 +145,58 @@ dtodo <- function(x, index, confirm) UseMethod("dtodo", x)
 #'
 #' This function prints the comments associated with the supplied R object.
 #' @param x R object to print the comments from
+#' @param ids vector of comment id's to return
+#' @param commentonly default = FALSE, set to TRUE to only return the comment text
 #' @param showtimestamps boolean to indicate if timestamps for each comment should be shown or hidden
 #' @param showcategories boolean to indicate if the category of each comment should be shown or hidden
 #' @return print out of comments in tabular form
 #' @keywords get comments
 #' @export
-notes.commented <- function(x, showtimestamps = FALSE, showcategories = FALSE) {
+notes.commented <- function(x, ids = NULL, commentonly = NULL, showtimestamps = FALSE, showcategories = FALSE) {
   cmtMatrix <- attr(x,'comments')
-  cat(format('#    Comments', width = 66), ifelse(showtimestamps, ' Time Stamp      ', ''), ifelse(showcategories, ' Category\n', '\n'))
-  cat(rep('-', ifelse(showtimestamps, ifelse(showcategories, 96, 92), ifelse(showcategories, 79, 70))),'\n', sep = '')
+  # check ids is an integer vector
+  if(!is.null(ids)) {
+    for(id in ids) {
+      # check all entries are integers
+      if(id%%1!=0) {
+        return(print("ids must be a vector of class id's"))
+      }
+      # check all class id's exist
+      if(is.null(cmtMatrix[,1] == id)) {
+        return(print(paste('comment id ', id, 'does not exist')))
+      }
+
+    }
+    cmtMatrix <- cmtMatrix[apply(cmtMatrix,1, function(row) {row[1] %in% ids}),, drop=F]
+  }
+  if(is.null(commentonly)) {
+    commentonly <- if(length(ids) == 1) TRUE else FALSE
+  }
+  if(!commentonly) {
+    cat(format('#    Comments', width = 66), ifelse(showtimestamps, ' Time Stamp      ', ''), ifelse(showcategories, ' Category\n', '\n'))
+    cat(rep('-', ifelse(showtimestamps, ifelse(showcategories, 96, 92), ifelse(showcategories, 79, 70))),'\n', sep = '')
+  }
+
   for ( i in 1:nrow(cmtMatrix)) {
+    if(commentonly) {
+      cat(as.character(cmtMatrix[i,2]), '\n')
+    } else {
     cat(as.character(format(cmtMatrix[i,1]), width = 3),': ', format(as.character(cmtMatrix[i,2]), width = 60), ' ', ifelse(showtimestamps, format(as.POSIXct(cmtMatrix[i,3][[1]]), '%m/%d/%Y %H:%M '), ''), ifelse(showcategories, format(as.character(cmtMatrix[i,4][[1]]), width = 9), ''), '\n')
   }
-  cat('\n')
+  #cat('\n')
+  }
+}
+
+#' rnotes commented Function
+#'
+#' This function returns the raw comments matrix associated with the supplied R object.
+#' @param x R object to print the comments from
+#' @return comments matrix
+#' @keywords get comments matrix
+#' @export
+rnotes.commented <- function(x) {
+  cmtMatrix <- attr(x,'comments')
+  return(cmtMatrix)
 }
 
 #' todos commented Function
@@ -297,12 +351,26 @@ dtodo.commented <- function(x, index, confirm) {
 #'
 #' This function provides a help message when applied to an R object that has not been enabled for comments.
 #' @param x R object to print the comments from
+#' @param ids vector of comment id's to return
+#' @param commentonly default = FALSE, set to TRUE to only return the comment text
 #' @param showtimestamps boolean to indicate if timestamps for each comment should be shown or hidden
 #' @param showcategories boolean to indicate if the category of each comment should be shown or hidden
 #' @return message on correct use of function
 #' @keywords get comments
 #' @export
-notes.default <- function(x, showtimestamps, showcategories) {
+notes.default <- function(x, ids, commentonly, showtimestamps, showcategories) {
+  cat('See ?notes for correct usage\n')
+  invisible(x)
+}
+
+#' rnotes Default Function
+#'
+#' This function returns the raw comments matrix associated with the supplied R object.
+#' @param x R object to print the comments from
+#' @return comments matrix
+#' @keywords get comments matrix
+#' @export
+rnotes.default <- function(x) {
   cat('See ?notes for correct usage\n')
   invisible(x)
 }

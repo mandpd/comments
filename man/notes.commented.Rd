@@ -4,11 +4,15 @@
 \alias{notes.commented}
 \title{notes commented Function}
 \usage{
-\method{notes}{commented}(x, showtimestamps = FALSE,
-  showcategories = FALSE)
+\method{notes}{commented}(x, ids = NULL, commentonly = NULL,
+  showtimestamps = FALSE, showcategories = FALSE)
 }
 \arguments{
 \item{x}{R object to print the comments from}
+
+\item{ids}{vector of comment id's to return}
+
+\item{commentonly}{default = FALSE, set to TRUE to only return the comment text}
 
 \item{showtimestamps}{boolean to indicate if timestamps for each comment should be shown or hidden}
 

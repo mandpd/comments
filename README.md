@@ -42,8 +42,8 @@ df <- enotes(cars, 'dataset of speed and stopping distances of cars')
 df <- anote(df, 'from base package') 
 ```
 
-This enables the use of anote(), dnote(), and notes() with the cars
-data.frame
+This enables the use of anote(), dnote(), notes(), and rnotes() with the
+cars data.frame
 
 ### notes() - list the notes attached to an R object
 
@@ -54,6 +54,27 @@ notes(df)
 #> 1 :  dataset of speed and stopping distances of cars                  
 #> 2 :  from base package
 ```
+
+You can also extract a specific note by providing a column vector of
+comment ids
+
+``` r
+notes(df,2)
+#> #    Comments                                                       
+#> ----------------------------------------------------------------------
+#> 2 :  from base package
+```
+
+### rnotes() - retrieve the raw notes matrix object
+
+This can be useful if you want to use the text from a specific comment,
+for example in the title of a plot
+
+``` r
+plot(df, main = rnotes(df)[1,2][[1]])
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 ### anote() - add a new note to the list attached to an R object
 
@@ -115,8 +136,8 @@ df3 <- dnote(df3,1,confirm = FALSE)
 notes(df3)
 #> #    Comments                                                       
 #> ----------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                      
-#> 3 :  filtered out dist variable
+#> 1 :  added a time variable based on dist / speed                      
+#> 2 :  filtered out dist variable
 ```
 
 ### summary function
@@ -128,8 +149,8 @@ summary is run
 summary(df3)
 #> #    Comments                                                       Time Stamp       
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    03/27/2019 11:21   
-#> 3 :  filtered out dist variable                                     03/27/2019 11:21
+#> 1 :  added a time variable based on dist / speed                    04/06/2019 11:35   
+#> 2 :  filtered out dist variable                                     04/06/2019 11:35
 #>      speed           time      
 #>  Min.   : 4.0   Min.   :0.500  
 #>  1st Qu.:12.0   1st Qu.:1.921  
@@ -148,8 +169,8 @@ is run with the ‘notes’ parameter set to TRUE
 print(df3[1:5,], notes = T)
 #> #    Comments                                                       Time Stamp       
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    03/27/2019 11:21   
-#> 3 :  filtered out dist variable                                     03/27/2019 11:21   
+#> 1 :  added a time variable based on dist / speed                    04/06/2019 11:35   
+#> 2 :  filtered out dist variable                                     04/06/2019 11:35   
 #> 
 #>   speed      time
 #> 1     4 0.5000000
@@ -168,8 +189,8 @@ parameter to see these
 notes(df3, showtimestamps = T)
 #> #    Comments                                                       Time Stamp       
 #> --------------------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                    03/27/2019 11:21   
-#> 3 :  filtered out dist variable                                     03/27/2019 11:21
+#> 1 :  added a time variable based on dist / speed                    04/06/2019 11:35   
+#> 2 :  filtered out dist variable                                     04/06/2019 11:35
 ```
 
 ### categories
@@ -183,8 +204,8 @@ comment is tagged with ‘none’.
 notes(df3, showcategories = T)
 #> #    Comments                                                        Category
 #> -------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                     none      
-#> 3 :  filtered out dist variable                                      none
+#> 1 :  added a time variable based on dist / speed                     none      
+#> 2 :  filtered out dist variable                                      none
 ```
 
 You can override the default tag when adding a comment by setting the
@@ -195,9 +216,9 @@ df3 <- anote(df3, 'the dist values appear skewed', category = 'review')
 notes(df3, showcategories = T)
 #> #    Comments                                                        Category
 #> -------------------------------------------------------------------------------
-#> 2 :  added a time variable based on dist / speed                     none      
-#> 3 :  filtered out dist variable                                      none      
-#> 4 :  the dist values appear skewed                                   review
+#> 1 :  added a time variable based on dist / speed                     none      
+#> 2 :  filtered out dist variable                                      none      
+#> 3 :  the dist values appear skewed                                   review
 ```
 
 ### atodo() - add a new todo comment to the list of comments attached to an R object

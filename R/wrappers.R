@@ -18,7 +18,7 @@
 print.commented <- function(x, ..., notes = F, showtimestamps = T) {
   notes_x <- x
   if(notes) {
-    notes(x, showtimestamps)
+    notes(x, showtimestamps = showtimestamps)
   }
   # if this is a basic vector or list, suppress additional class output 2
   if(is.data.frame(x)) {
