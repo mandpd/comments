@@ -1,0 +1,4 @@
+Name: Add previous comment to highlighted data.frame
+Description: Appends Previous Commented Text as Comment to highlighted R object
+Binding: convertToCommentAddin
+Interactive: false
